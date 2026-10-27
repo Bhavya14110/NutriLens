@@ -1,4 +1,4 @@
-import { CANON, STAPLES, type Canon } from "@/lib/canon-data";
+import { CANON, IMG, STAPLES, type Canon } from "@/lib/canon-data";
 import type { Loc } from "@/types/db";
 
 export { CANON, STAPLES, type Canon };
@@ -77,6 +77,21 @@ export function mealName(id: string): string {
   const x = getCanon(id);
   if (x?.meal) return x.meal;
   return titleCase(x?.spoon ?? id);
+}
+
+// a free TheMealDB ingredient photo for fresh / manual items that have no product shot
+export function ingImage(id: string | null | undefined): string | null {
+  if (!id || !byid.has(id)) return null;
+  const name = id in IMG ? IMG[id] : mealName(id);
+  return name ? `https://www.themealdb.com/images/ingredients/${encodeURIComponent(name)}-Small.png` : null;
+}
+
+// last resort for things we couldn't map (recipe extras like "Shallots", "Thyme"):
+// TheMealDB names photos after plain ingredient names, and FoodImage falls back to an icon on a miss
+export function nameImage(name: string | null | undefined): string | null {
+  const n = (name ?? "").trim().replace(/\s+/g, " ");
+  if (!n || n.length > 40 || /\d/.test(n)) return null;
+  return `https://www.themealdb.com/images/ingredients/${encodeURIComponent(n.replace(/\b\w/g, (m) => m.toUpperCase()))}-Small.png`;
 }
 
 export function cocktailName(id: string): string | null {

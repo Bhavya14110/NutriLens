@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, MoreHorizontal, Pencil, Plus, Refrigerator, Snowflake, Trash2, Warehouse, PieChart } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { ExpiryChip, NutriScore } from "@/components/common/badges";
@@ -38,7 +39,9 @@ const edge: Record<Fresh, string> = { expired: "before:bg-expired", soon: "befor
 
 export function PantryScreen() {
   const { data, isLoading, error, refetch, isFetching } = usePantry();
-  const [filter, setFilter] = useState<Filter>("all");
+  // Home's "Use these first" cards link here with ?filter=soon
+  const sp = useSearchParams();
+  const [filter, setFilter] = useState<Filter>(() => (filters.some((f) => f.id === sp.get("filter")) ? (sp.get("filter") as Filter) : "all"));
 
   const shown = useMemo(() => {
     const items = data ?? [];
@@ -164,8 +167,9 @@ function PantryRowItem({ item }: { item: PantryView }) {
           </span>
         </div>
       </div>
-      <Button variant="secondary" size="sm" onClick={() => close("used")} aria-label={`Mark ${item.name} as used`}>
-        <CheckCircle2 aria-hidden="true" /> <span className="hidden sm:inline">Used</span>
+      {/* one quiet tick per row instead of a "Used" label repeated down the list */}
+      <Button variant="ghost" size="icon" onClick={() => close("used")} aria-label={`Mark ${item.name} as used`} title="Mark as used" className="text-fresh hover:bg-fresh/10 hover:text-fresh">
+        <CheckCircle2 className="size-5" aria-hidden="true" />
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

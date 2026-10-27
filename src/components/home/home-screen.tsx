@@ -9,7 +9,7 @@ import { ErrorBox } from "@/components/common/states";
 import { RecipeCard } from "@/components/recipes/recipe-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDrinks, useHome, usePatchPantry, useUseItUp } from "@/hooks/data";
+import { useDrinks, useHome, useUseItUp } from "@/hooks/data";
 import { cn } from "@/lib/utils";
 
 function hello() {
@@ -22,7 +22,6 @@ export function HomeScreen() {
   const home = useHome();
   const recs = useUseItUp();
   const drinks = useDrinks();
-  const patch = usePatchPantry();
   const d = home.data;
 
   return (
@@ -97,23 +96,18 @@ export function HomeScreen() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: Math.min(i, 6) * 0.05 }}
-                className="w-36 shrink-0 snap-start overflow-hidden rounded-2xl border bg-card"
+                className="w-36 shrink-0 snap-start"
               >
-                <FoodImage src={it.image} alt="" kind={it.fruit ? "fruit" : "product"} className="aspect-[4/3] w-full bg-white" sizes="144px" contain={Boolean(it.image)} />
-                <div className="p-2.5">
-                  <p className="truncate text-sm font-medium" title={it.name}>
-                    {it.name}
-                  </p>
-                  <ExpiryChip date={it.expires_at} className="mt-1" />
-                  <button
-                    type="button"
-                    onClick={() => patch.mutate({ id: it.id, patch: { status: "used" } })}
-                    className="mt-2 w-full rounded-lg bg-secondary py-1 text-xs font-medium hover:bg-accent"
-                    aria-label={`Mark ${it.name} as used`}
-                  >
-                    Used it
-                  </button>
-                </div>
+                {/* the whole card opens the pantry's "use soon" view, where the used/wasted actions live */}
+                <Link href="/pantry?filter=soon" className="block h-full overflow-hidden rounded-2xl border bg-card transition-shadow hover:shadow-md">
+                  <FoodImage src={it.image} alt="" kind={it.fruit ? "fruit" : "product"} className="aspect-[4/3] w-full bg-white" sizes="144px" contain={Boolean(it.image)} />
+                  <div className="p-2.5">
+                    <p className="truncate text-sm font-medium" title={it.name}>
+                      {it.name}
+                    </p>
+                    <ExpiryChip date={it.expires_at} className="mt-1" />
+                  </div>
+                </Link>
               </motion.li>
             ))}
           </ul>

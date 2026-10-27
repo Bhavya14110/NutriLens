@@ -6,6 +6,7 @@ import { Calculator, Loader2, Plus, ScanLine, ShoppingBasket, Trash2 } from "luc
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
+import { FoodImage } from "@/components/common/food-image";
 import { Empty, ErrorBox, PageHeader } from "@/components/common/states";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { qk, useAddShop, useRemoveShop, useShop, useTickShop } from "@/hooks/data";
+import { ingImage, nameImage } from "@/lib/canon";
 import { api } from "@/lib/fetcher";
 import { formatInr } from "@/lib/shop";
 import { cn } from "@/lib/utils";
@@ -150,6 +152,7 @@ function ShopRow({ item }: { item: ShopItemView }) {
           )
         }
       />
+      <FoodImage src={ingImage(item.canon_ing) ?? nameImage(item.name)} alt="" className={cn("size-10 shrink-0 rounded-xl bg-white", item.done && "opacity-50")} sizes="40px" contain />
       <label htmlFor={id} className={cn("min-w-0 flex-1 cursor-pointer", item.done && "text-muted-foreground line-through")}>
         <span className="block truncate font-medium capitalize">{item.name}</span>
         <span className="text-xs text-muted-foreground">

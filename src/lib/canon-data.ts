@@ -32,6 +32,52 @@ export type Canon = {
 
 type Extra = Partial<Pick<Canon, "spoon" | "meal" | "cdb" | "fv">>;
 
+// TheMealDB ingredient photo to use when its name for the thing differs from `meal`.
+// null = TheMealDB has no decent photo, show our icon tile instead of a broken image.
+export const IMG: Record<string, string | null> = {
+  "milk powder": "Milk",
+  pasta: "Spaghetti",
+  corn: "Sweetcorn",
+  "sweet potato": "Sweet Potatoes",
+  pear: "Pears",
+  peach: "Peaches",
+  "sesame seeds": "Sesame Seed",
+  ketchup: "Tomato Ketchup",
+  tamarind: "Tamarind Paste",
+  pickle: "Dill Pickles",
+  cola: "Coca-Cola",
+  "lemon soda": "Sprite",
+  "mango juice": "Mango",
+  "pomegranate juice": "Pomegranate",
+  "flavoured milk": "Milk",
+  lemonade: "Lemonade",
+  "moong dal": "Lentils",
+  ragi: null,
+  cornflakes: null,
+  "soya chunks": null,
+  "curry leaves": null,
+  cauliflower: null,
+  okra: null,
+  coconut: null,
+  grapes: null,
+  watermelon: null,
+  melon: null,
+  guava: null,
+  plum: null,
+  lychee: null,
+  jackfruit: null,
+  asafoetida: null,
+  ajwain: null,
+  "coconut oil": null,
+  pistachios: null,
+  chips: null,
+  namkeen: null,
+  papad: null,
+  "grape juice": null,
+  "coconut water": null,
+  "energy drink": null,
+};
+
 const c = (id: string, label: string, group: CanonGroup, kw: string[], tags: string[], shelf: number, loc: Loc, x: Extra = {}): Canon => ({
   id,
   label,

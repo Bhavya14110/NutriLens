@@ -8,6 +8,8 @@ import {
   detectFruit,
   fruityName,
   getCanon,
+  ingImage,
+  nameImage,
   isFruitBased,
   mealName,
   normName,
@@ -132,6 +134,21 @@ describe("api name mappings", () => {
     expect(cocktailName("biscuits")).toBeNull();
     expect(cocktailName("jam")).toBeNull();
     expect(fruityName("banana")).toBe("Banana");
+  });
+});
+
+describe("ingredient photos", () => {
+  it("uses TheMealDB ingredient images, with overrides and known gaps", () => {
+    expect(ingImage("milk")).toBe("https://www.themealdb.com/images/ingredients/Milk-Small.png");
+    expect(ingImage("pear")).toBe("https://www.themealdb.com/images/ingredients/Pears-Small.png");
+    expect(ingImage("curd")).toContain("Greek%20Yogurt-Small.png");
+    expect(ingImage("okra")).toBeNull();
+    expect(ingImage(null)).toBeNull();
+    expect(ingImage("not-a-canon")).toBeNull();
+    // unmapped recipe extras fall back to their plain name; junk names don't
+    expect(nameImage("shallots")).toBe("https://www.themealdb.com/images/ingredients/Shallots-Small.png");
+    expect(nameImage("Amul Gold 500ml")).toBeNull();
+    expect(nameImage("")).toBeNull();
   });
 });
 
