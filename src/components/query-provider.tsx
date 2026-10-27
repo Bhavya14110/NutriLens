@@ -1,9 +1,9 @@
 "use client";
 
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { QueryClient } from "@tanstack/react-query";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { useState, type ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { persistQueryClient } from "@tanstack/react-query-persist-client";
+import { useEffect, useState, type ReactNode } from "react";
 import { HttpError } from "@/lib/fetcher";
 
 const WEEK = 7 * 86400 * 1000;
@@ -27,25 +27,26 @@ export function QueryProvider({ uid, children }: { uid: string; children: ReactN
         },
       }),
   );
-  const [persister] = useState(() =>
-    createSyncStoragePersister({
-      storage: typeof window === "undefined" ? undefined : window.localStorage,
+
+  // restore the saved cache only after hydration. PersistQueryClientProvider restored it
+  // mid-hydration, so the client rendered saved data where the server had rendered
+  // nothing ("Riya, what's cooking?" vs "What's cooking?") and React threw a mismatch.
+  // hydrate() keeps whichever copy is newer, so a fetch that lands first isn't clobbered.
+  useEffect(() => {
+    const persister = createSyncStoragePersister({
+      storage: window.localStorage,
       // per-user key so a shared phone never shows the last person's pantry
       key: `nutrilens-cache-${uid}`,
-    }),
-  );
+    });
+    const [unsubscribe] = persistQueryClient({
+      queryClient: client,
+      persister,
+      maxAge: WEEK,
+      buster: "v1",
+      dehydrateOptions: { shouldDehydrateQuery: (q) => q.state.status === "success" && PERSIST.has(String(q.queryKey[0])) },
+    });
+    return unsubscribe;
+  }, [client, uid]);
 
-  return (
-    <PersistQueryClientProvider
-      client={client}
-      persistOptions={{
-        persister,
-        maxAge: WEEK,
-        buster: "v1",
-        dehydrateOptions: { shouldDehydrateQuery: (q) => q.state.status === "success" && PERSIST.has(String(q.queryKey[0])) },
-      }}
-    >
-      {children}
-    </PersistQueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }

@@ -31,7 +31,10 @@ export function HomeScreen() {
         <div className="grain pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
         <div className="relative flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-sm opacity-80">{hello()}</p>
+            {/* greeting depends on the clock, server and browser can land either side of an hour */}
+            <p className="text-sm opacity-80" suppressHydrationWarning>
+              {hello()}
+            </p>
             <h1 className="text-3xl font-semibold text-primary-foreground md:text-4xl">{d?.name ? `${d.name}, what's cooking?` : "What's cooking?"}</h1>
           </div>
           <Button asChild size="lg" variant="secondary" className="h-12 rounded-full px-6 text-base shadow-lg">
