@@ -41,7 +41,7 @@ export const GET = route(async (_req: Request, { params }: RouteContext<"/api/re
   const res: RecipeRes = {
     recipe,
     ings,
-    dietWarn: diets.filter((d) => !recipeOk(d, recipe.ings.map((i) => i.name))),
+    dietWarn: diets.filter((d) => !recipeOk(d, [recipe.title, ...recipe.ings.map((i) => i.name)])),
   };
   return ok(res);
 });

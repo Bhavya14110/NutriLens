@@ -37,3 +37,7 @@ One line per call I had to make, with the reason. Newest at the bottom.
 - **RLS test**: always checks the migration statically; also runs a live two-user test when `RLS_TEST_*` env vars point at a real project.
 - **Seed is `scripts/seed.ts` (not `seed.sql`)** — it has to create auth users, which needs the admin API; it uses real OFF barcodes.
 - **Images through `next/image`** with remote patterns for the API image hosts; a calm icon tile replaces any broken image.
+- **Diet check also reads the recipe title** — live testing showed Spoonacular's used/missed lists can omit ingredients (a "Sausage … Salad" listed no sausage), and keyword matching now covers plurals ("sausages", "anchovies").
+- **"Vegetarian" means lacto-ovo (eggs allowed)**; households that avoid eggs should pick Jain or Vegan. Kept simple on purpose; easy to flip in `src/lib/diet.ts`.
+- **Dropped loose drink mappings** (whole tomato → tomato juice, biscuits → Oreo, jam → grenadine) after they produced odd live matches.
+- **Seed sets `status`/`done` explicitly** — PostgREST bulk inserts send `null` for keys missing from some rows instead of the column default.

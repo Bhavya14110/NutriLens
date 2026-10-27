@@ -127,6 +127,10 @@ describe("api name mappings", () => {
     expect(cocktailName("orange juice")).toBe("Orange juice");
     expect(cocktailName("milk")).toBe("Milk");
     expect(cocktailName("atta")).toBeNull();
+    // no stretchy drink mappings: whole tomatoes aren't tomato juice, Parle-G isn't an Oreo
+    expect(cocktailName("tomato")).toBeNull();
+    expect(cocktailName("biscuits")).toBeNull();
+    expect(cocktailName("jam")).toBeNull();
     expect(fruityName("banana")).toBe("Banana");
   });
 });

@@ -146,6 +146,9 @@ async function main() {
     fruit: p.fruit ?? null,
     expires_at: p.exp === null ? null : day(p.exp),
     added_at: at(-(i % 6) - 1, 10),
+    // bulk inserts send null for missing keys instead of the column default, so be explicit
+    status: "active" as const,
+    closed_at: null,
   }));
   const closed = history.map((h) => ({
     household_id: hid,
@@ -178,11 +181,11 @@ async function main() {
   const used = (ins ?? []).filter((r) => ["Fresh Paneer", "Tomatoes"].includes(r.name)).map((r) => r.id);
   await sb.from("cook_logs").insert({ household_id: hid, src: "mealdb", recipe_id: "52807", title: "Baingan Bharta", cooked_at: at(-2, 20), used_items: used });
   await sb.from("shop_items").insert([
-    { household_id: hid, name: "Milk", canon_ing: "milk", qty: 2, unit: "l" },
-    { household_id: hid, name: "Amul milk", canon_ing: "milk", qty: 1, unit: "l" },
-    { household_id: hid, name: "Bread", canon_ing: "bread", qty: 1, unit: "pcs" },
-    { household_id: hid, name: "Ginger", canon_ing: "ginger", qty: 100, unit: "g" },
-    { household_id: hid, name: "Frooti", canon_ing: "mango juice", qty: 2, unit: "pcs" },
+    { household_id: hid, name: "Milk", canon_ing: "milk", qty: 2, unit: "l", done: false },
+    { household_id: hid, name: "Amul milk", canon_ing: "milk", qty: 1, unit: "l", done: false },
+    { household_id: hid, name: "Bread", canon_ing: "bread", qty: 1, unit: "pcs", done: false },
+    { household_id: hid, name: "Ginger", canon_ing: "ginger", qty: 100, unit: "g", done: false },
+    { household_id: hid, name: "Frooti", canon_ing: "mango juice", qty: 2, unit: "pcs", done: false },
     { household_id: hid, name: "Basmati rice", canon_ing: "basmati rice", qty: 1, unit: "kg", done: true },
   ]);
 

@@ -81,7 +81,7 @@ export const CANON: Canon[] = [
   // bakery
   c("bread", "Bread", "bakery", ["bread", "sandwich bread", "brown bread", "white bread", "multigrain bread", "pav", "bun"], ["en:breads", "en:sliced-breads", "en:white-breads", "en:wholemeal-breads", "en:sandwich-breads"], 4, "shelf"),
   c("tortilla", "Wraps / tortilla", "bakery", ["tortilla", "wrap", "wraps"], ["en:tortillas", "en:wheat-tortillas", "en:wraps"], 14, "shelf", { meal: "Flour Tortilla" }),
-  c("biscuits", "Biscuits", "bakery", ["biscuit", "biscuits", "cookies", "parle g", "marie", "digestive"], ["en:biscuits", "en:cookies", "en:sweet-biscuits", "en:dry-biscuits"], 90, "shelf", { meal: "Digestive Biscuits", cdb: "Oreo cookie" }),
+  c("biscuits", "Biscuits", "bakery", ["biscuit", "biscuits", "cookies", "parle g", "marie", "digestive"], ["en:biscuits", "en:cookies", "en:sweet-biscuits", "en:dry-biscuits"], 90, "shelf", { meal: "Digestive Biscuits" }),
   c("rusk", "Rusk", "bakery", ["rusk", "toast rusk"], ["en:rusks"], 90, "shelf", { spoon: "toast" }),
 
   // pulses & legumes
@@ -101,7 +101,7 @@ export const CANON: Canon[] = [
 
   // vegetables
   c("onion", "Onion", "veg", ["onion", "onions", "pyaz", "kanda"], ["en:onions"], 21, "shelf"),
-  c("tomato", "Tomato", "veg", ["tomato", "tomatoes", "tamatar"], ["en:tomatoes", "en:fresh-tomatoes"], 5, "shelf", { fv: "Tomato", cdb: "Tomato juice" }),
+  c("tomato", "Tomato", "veg", ["tomato", "tomatoes", "tamatar"], ["en:tomatoes", "en:fresh-tomatoes"], 5, "shelf", { fv: "Tomato" }),
   c("potato", "Potato", "veg", ["potato", "potatoes", "aloo"], ["en:potatoes"], 21, "shelf", { meal: "Potatoes" }),
   c("garlic", "Garlic", "veg", ["garlic", "lehsun", "lahsun"], ["en:garlic"], 30, "shelf"),
   c("ginger", "Ginger", "veg", ["ginger", "adrak"], ["en:ginger"], 21, "fridge", { cdb: "Ginger" }),
@@ -198,7 +198,7 @@ export const CANON: Canon[] = [
   c("coconut milk", "Coconut milk", "sauce", ["coconut milk", "coconut cream"], ["en:coconut-milks", "en:coconut-creams"], 4, "fridge", { cdb: "Coconut milk" }),
   c("peanut butter", "Peanut butter", "sweet", ["peanut butter"], ["en:peanut-butters"], 90, "shelf"),
   c("chocolate spread", "Chocolate spread", "sweet", ["nutella", "chocolate spread", "hazelnut spread", "choco spread"], ["en:hazelnut-spreads", "en:chocolate-spreads", "en:cocoa-and-hazelnuts-spreads"], 90, "shelf", { spoon: "nutella", meal: "Nutella", cdb: "Chocolate syrup" }),
-  c("jam", "Jam", "sweet", ["jam", "jelly", "marmalade", "fruit spread", "preserve"], ["en:jams", "en:fruit-jams", "en:marmalades", "en:fruit-preserves"], 90, "fridge", { cdb: "Grenadine" }),
+  c("jam", "Jam", "sweet", ["jam", "jelly", "marmalade", "fruit spread", "preserve"], ["en:jams", "en:fruit-jams", "en:marmalades", "en:fruit-preserves"], 90, "fridge"),
   c("honey", "Honey", "sweet", ["honey", "shahad"], ["en:honeys"], 730, "shelf", { cdb: "Honey" }),
   c("sugar", "Sugar", "sweet", ["sugar", "cheeni", "chini", "brown sugar"], ["en:sugars", "en:white-sugars", "en:granulated-sugars", "en:brown-sugars"], 730, "shelf", { cdb: "Sugar" }),
   c("jaggery", "Jaggery (gur)", "sweet", ["jaggery", "gur", "gud"], ["en:jaggery", "en:jaggeries"], 365, "shelf", { spoon: "brown sugar", meal: "Brown Sugar", cdb: "Brown sugar" }),

@@ -7,7 +7,7 @@ import { addDays, daysLeft, expiryText, freshness, todayIst } from "@/lib/expiry
 import { bars, lightFor, missingFields, scoreToGrade } from "@/lib/health";
 import { setQuotaStore } from "@/lib/quota";
 import { guessInr, matchesLine, mergeShop, type ShopLine } from "@/lib/shop";
-import { pantryCanon, useItUp, type PItem } from "@/lib/useitup";
+import { pantryCanon, spoonCards, useItUp, type PItem } from "@/lib/useitup";
 import type { Product } from "@/types/food";
 import { fx, json, MemQuota, MemStore, routeFetch } from "./helpers";
 
@@ -109,6 +109,12 @@ describe("diets", () => {
     expect(ingOk("jain", "eggs")).toBe(false);
     expect(recipeOkFor(["vegetarian", "jain"], ["potato"])).toBe(false);
     expect(recipeOkFor(["none"], ["beef"])).toBe(true);
+    // plurals used to slip through
+    expect(recipeOk("vegetarian", ["breakfast sausages"])).toBe(false);
+    expect(recipeOk("vegetarian", ["anchovies"])).toBe(false);
+    expect(recipeOk("vegetarian", ["chicken thighs"])).toBe(false);
+    expect(recipeOk("vegan", ["eggs"])).toBe(false);
+    expect(recipeOk("vegetarian", ["green beans", "potatoes", "lentils"])).toBe(true);
   });
 });
 
@@ -158,6 +164,12 @@ describe("use it up", () => {
     expect(res.recs[0].rescues).toBe(2);
     // chicken tikka is filtered out for vegetarians
     expect(res.recs.some((r) => r.title === "Chicken Tikka")).toBe(false);
+  });
+
+  it("checks the title too, since spoonacular's ingredient lists can be incomplete", () => {
+    const row = { id: 1, title: "Sausage, Spinach, and Quail Egg Breakfast Salad", image: null, likes: 0, usedIngredientCount: 1, missedIngredientCount: 0, usedIngredients: [{ name: "spinach" }], missedIngredients: [] };
+    expect(spoonCards([row], ["spinach"], new Set(), ["vegetarian"])).toEqual([]);
+    expect(spoonCards([row], ["spinach"], new Set(), ["none"])).toHaveLength(1);
   });
 
   it("silently falls back to TheMealDB when the quota is spent", async () => {

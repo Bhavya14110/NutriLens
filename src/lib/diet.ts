@@ -12,10 +12,13 @@ const ROOTS = ["onion", "onions", "garlic", "potato", "potatoes", "carrot", "car
 // plant-based look-alikes that shouldn't trip the dairy/egg checks
 const SAFE = ["coconut milk", "almond milk", "soy milk", "oat milk", "peanut butter", "cocoa butter", "eggplant", "egg plant", "egg plants", "butternut", "butter beans", "cream of tartar", "vegan"];
 
+// "sausages" / "anchovies" should trip the same check as the singular keyword
+const forms = (w: string) => [w, `${w}s`, `${w}es`, w.replace(/y$/, "ies")];
+
 function hits(name: string, words: string[]) {
-  let n = ` ${name.toLowerCase().replace(/[^a-z ]+/g, " ")} `;
+  let n = ` ${name.toLowerCase().replace(/[^a-z ]+/g, " ").replace(/\s+/g, " ").trim()} `;
   for (const s of SAFE) n = n.replace(` ${s} `, " ");
-  return words.some((w) => n.includes(` ${w} `));
+  return words.some((w) => forms(w).some((f) => n.includes(` ${f} `)));
 }
 
 export function ingOk(diet: Diet, name: string): boolean {

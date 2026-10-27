@@ -41,7 +41,8 @@ function toCanon(name: string, have: readonly string[]): string | null {
 
 export function spoonCards(rows: SpoonFind, have: readonly string[], soon: ReadonlySet<string>, diets: readonly Diet[]): RecipeCard[] {
   return rows
-    .filter((r) => recipeOkFor(diets, [...r.usedIngredients, ...r.missedIngredients].map((i) => i.name)))
+    // spoonacular's lists skip some ingredients (we've seen sausage missing), so the title counts too
+    .filter((r) => recipeOkFor(diets, [r.title, ...[...r.usedIngredients, ...r.missedIngredients].map((i) => i.name)]))
     .map((r) => {
       const usedCanon = r.usedIngredients.map((i) => toCanon(i.name, have));
       return {
@@ -90,7 +91,7 @@ export async function mealFallback(ids: readonly string[], soon: ReadonlySet<str
   const have = new Set(ids);
   return full
     .filter((r): r is Recipe => r !== null)
-    .filter((r) => recipeOkFor(diets, r.ings.map((i) => i.name)))
+    .filter((r) => recipeOkFor(diets, [r.title, ...r.ings.map((i) => i.name)]))
     .map((r) => mealCard(r, have, soon))
     .filter((c) => c.used > 0)
     .sort(rank)
