@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Logo } from "@/components/brand/logo";
 import { JoinButton } from "@/components/onboarding/join-button";
 import { Button } from "@/components/ui/button";
+import { previewHousehold } from "@/lib/household";
 import { getCtx } from "@/lib/session";
 
 export const metadata: Metadata = { title: "Join a household" };
@@ -13,11 +14,15 @@ export default async function JoinPage({ params }: PageProps<"/join/[code]">) {
   const { code } = await params;
   const clean = code.toLowerCase().trim();
   const ctx = await getCtx();
-  if (!ctx) redirect(`/login?next=${encodeURIComponent(`/join/${clean}`)}`);
+  // AUTH DISABLED: everyone is the guest user, so there's no login to bounce to
+  // if (!ctx) redirect(`/login?next=${encodeURIComponent(`/join/${clean}`)}`);
+  if (!ctx) redirect("/home");
 
   const valid = /^[a-f0-9]{8}$/.test(clean);
-  const { data } = valid ? await ctx.sb.rpc("household_preview", { code: clean }) : { data: null };
-  const house = data?.[0] ?? null;
+  // AUTH DISABLED: household_preview rpc is granted to signed-in users only
+  // const { data } = valid ? await ctx.sb.rpc("household_preview", { code: clean }) : { data: null };
+  // const house = data?.[0] ?? null;
+  const house = valid ? await previewHousehold(ctx, clean) : null;
   if (house && ctx.hh?.invite_code === clean) redirect("/home");
 
   return (

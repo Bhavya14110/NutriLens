@@ -1,7 +1,8 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Copy, Crown, Loader2, LogOut, Share2 } from "lucide-react";
+// AUTH DISABLED: LogOut icon was for the sign-out button
+import { Copy, Crown, Loader2, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
@@ -37,7 +38,8 @@ export function SettingsScreen() {
   if (error || !data) return <ErrorBox error={error} retry={() => refetch()} />;
   return (
     <div className="space-y-5">
-      <PageHeader title="Settings" sub={data.email} />
+      {/* AUTH DISABLED: sub used to be the signed-in email */}
+      <PageHeader title="Settings" sub={`Guest mode · using ${data.email}`} />
       <Section title="Your profile" sub="Allergies and diet are shared with your household so scans and recipes work for everyone.">
         <ProfileForm me={data} />
       </Section>
@@ -53,11 +55,12 @@ export function SettingsScreen() {
           <ThemeToggle />
         </div>
       </Section>
+      {/* AUTH DISABLED: nothing to sign out of while the app runs as a guest
       <form action="/auth/signout" method="post">
         <Button type="submit" variant="outline" className="w-full">
           <LogOut aria-hidden="true" /> Sign out
         </Button>
-      </form>
+      </form> */}
     </div>
   );
 }

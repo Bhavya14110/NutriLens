@@ -40,4 +40,5 @@ One line per call I had to make, with the reason. Newest at the bottom.
 - **Diet check also reads the recipe title** — live testing showed Spoonacular's used/missed lists can omit ingredients (a "Sausage … Salad" listed no sausage), and keyword matching now covers plurals ("sausages", "anchovies").
 - **"Vegetarian" means lacto-ovo (eggs allowed)**; households that avoid eggs should pick Jain or Vegan. Kept simple on purpose; easy to flip in `src/lib/diet.ts`.
 - **Dropped loose drink mappings** (whole tomato → tomato juice, biscuits → Oreo, jam → grenadine) after they produced odd live matches.
+- **Auth switched off on request (guest mode)** — every auth code path is commented out with an `AUTH DISABLED` marker rather than deleted. The server acts as one guest (`GUEST_EMAIL`, default the seeded demo user) using the service-role client; household RPCs that need `auth.uid()` are replaced by `src/lib/household.ts`. Not safe to deploy publicly in this state.
 - **Seed sets `status`/`done` explicitly** — PostgREST bulk inserts send `null` for keys missing from some rows instead of the column default.

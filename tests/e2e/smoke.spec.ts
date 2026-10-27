@@ -2,22 +2,25 @@ import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
 // Needs a real Supabase project that has been migrated + seeded (npm run seed).
-// Signs in as the seeded e2e user through the real magic-link flow (token_hash -> /auth/confirm).
+// AUTH DISABLED: the app runs as the guest user (GUEST_EMAIL, default demo@nutrilens.app),
+// so there's no sign-in step. The original magic-link sign-in is kept below, commented out.
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const service = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const EMAIL = "e2e@nutrilens.app";
+// const EMAIL = "e2e@nutrilens.app";
 const BARCODE = "8902579000370"; // Frooti, seeded + live on Open Food Facts
 
 test.skip(!url || !service, "Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (and run npm run seed) to run the smoke test.");
 
-test("sign in → open a seeded product → add to pantry → see it on Home", async ({ page }) => {
+test("open the app → open a seeded product → add to pantry → see it on Home", async ({ page }) => {
   const admin = createClient(url as string, service as string, { auth: { persistSession: false } });
-  const { data, error } = await admin.auth.admin.generateLink({ type: "magiclink", email: EMAIL });
-  expect(error).toBeNull();
-  const hash = data.properties?.hashed_token;
-  expect(hash).toBeTruthy();
+  // AUTH DISABLED: sign-in step
+  // const { data, error } = await admin.auth.admin.generateLink({ type: "magiclink", email: EMAIL });
+  // expect(error).toBeNull();
+  // const hash = data.properties?.hashed_token;
+  // expect(hash).toBeTruthy();
+  // await page.goto(`/auth/confirm?token_hash=${hash}&type=email&next=/home`);
 
-  await page.goto(`/auth/confirm?token_hash=${hash}&type=email&next=/home`);
+  await page.goto("/home");
   await expect(page).toHaveURL(/\/home$/);
   await expect(page.getByRole("heading", { name: /what's cooking/i })).toBeVisible();
 

@@ -6,7 +6,9 @@ import { getCtx } from "@/lib/session";
 
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const ctx = await getCtx();
-  if (!ctx) redirect("/login");
+  // AUTH DISABLED: getCtx always returns the guest now
+  // if (!ctx) redirect("/login");
+  if (!ctx) redirect("/");
   if (!ctx.hh || !ctx.profile?.onboarded) redirect("/onboarding");
 
   return (

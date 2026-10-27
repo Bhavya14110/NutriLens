@@ -8,6 +8,12 @@
 4. **Use** it: recipes and drinks ranked by what's about to expire; cook mode deducts what you used.
 5. **Shop** for what's missing with a ₹ estimate; scanning a bought item ticks it off and adds it to the pantry.
 
+## ⚠️ Sign-in is currently switched off (guest mode)
+
+All authentication code is commented out and marked `AUTH DISABLED` (search for it to find every spot). Instead, the server treats every visitor as one guest user — `GUEST_EMAIL`, default `demo@nutrilens.app`, the seeded "Demo Flat 4B" household — and talks to the database with the service-role key. Households are still kept apart in code, and the database's row-level security is unchanged, but **anyone who can reach the server can read and change the guest household. Don't deploy this publicly.**
+
+To turn sign-in back on: uncomment every `AUTH DISABLED` block (and delete the small replacement code next to each), switch `src/lib/session.ts` back to `supabaseServer()` + `auth.getUser()`, and swap `src/lib/household.ts` calls back to the `create_household` / `join_household` / `leave_household` RPCs.
+
 ## Screenshots
 
 | Home | Health Score | Pantry | Cook mode |

@@ -22,8 +22,9 @@ export default function Landing() {
         <Logo />
         <div className="flex items-center gap-1">
           <ThemeToggle />
+          {/* AUTH DISABLED: was a "Sign in" link to /login */}
           <Button asChild variant="ghost">
-            <Link href="/login">Sign in</Link>
+            <Link href="/home">Open app</Link>
           </Button>
         </div>
       </header>
@@ -44,12 +45,13 @@ export default function Landing() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="h-12 rounded-full px-6 text-base">
-                <Link href="/login">
+                <Link href="/home">
                   Get started free <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
             </div>
-            <p className="mt-3 text-xs text-muted-foreground">No password needed. Sign in with an email link or Google.</p>
+            {/* AUTH DISABLED: <p className="mt-3 text-xs text-muted-foreground">No password needed. Sign in with an email link or Google.</p> */}
+            <p className="mt-3 text-xs text-muted-foreground">No sign-up needed — jump straight in.</p>
           </div>
           <LoopAnimation />
         </section>
@@ -72,7 +74,7 @@ export default function Landing() {
           <h2 className="text-3xl font-semibold md:text-4xl">Less waste. Better choices. Same groceries.</h2>
           <p className="mt-3 text-muted-foreground">Powered by Open Food Facts, Fruityvice, Spoonacular, TheMealDB and TheCocktailDB.</p>
           <Button asChild size="lg" className="mt-8 h-12 rounded-full px-6 text-base">
-            <Link href="/login">
+            <Link href="/home">
               Start scanning <ArrowRight aria-hidden="true" />
             </Link>
           </Button>

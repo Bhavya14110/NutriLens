@@ -8,7 +8,9 @@ export const metadata: Metadata = { title: "Set up your kitchen" };
 
 export default async function OnboardingPage() {
   const ctx = await getCtx();
-  if (!ctx) redirect("/login?next=/onboarding");
+  // AUTH DISABLED: no login page to send people to
+  // if (!ctx) redirect("/login?next=/onboarding");
+  if (!ctx) redirect("/");
   if (ctx.hh && ctx.profile?.onboarded) redirect("/home");
 
   return (
