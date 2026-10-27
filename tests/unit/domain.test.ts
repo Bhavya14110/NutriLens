@@ -6,7 +6,7 @@ import { drinkIdeas, drinkMatches } from "@/lib/drinks";
 import { addDays, daysLeft, expiryText, freshness, todayIst } from "@/lib/expiry";
 import { bars, lightFor, missingFields, scoreToGrade } from "@/lib/health";
 import { setQuotaStore } from "@/lib/quota";
-import { guessInr, matchesLine, mergeShop, type ShopLine } from "@/lib/shop";
+import { guessInr, knownPrice, matchesLine, mergeShop, pickCost, type ShopLine } from "@/lib/shop";
 import { pantryCanon, spoonCards, useItUp, type PItem } from "@/lib/useitup";
 import type { Product } from "@/types/food";
 import { fx, json, MemQuota, MemStore, routeFetch } from "./helpers";
@@ -144,6 +144,27 @@ describe("shopping list", () => {
   it("has a local ₹ fallback guess", () => {
     expect(guessInr("milk", 2)).toBe(64);
     expect(guessInr(null)).toBeGreaterThan(0);
+  });
+
+  it("prices by unit, not just by count", () => {
+    expect(guessInr("milk", 2, "l")).toBe(120); // ₹60/litre, not 2 × a 500 ml pack
+    expect(guessInr("milk", 500, "ml")).toBe(30);
+    expect(guessInr("ginger", 100, "g")).toBe(15);
+    expect(guessInr("eggs", 1, "dozen")).toBe(84);
+    expect(guessInr("cheese", 1)).toBe(130);
+    expect(guessInr("salt", 10, "g")).toBe(5); // never a silly ₹0
+  });
+
+  it("only trusts Spoonacular when it's in the right ballpark", () => {
+    // staples with a known Indian price always use it
+    expect(knownPrice("milk")).toBe(true);
+    expect(pickCost(235, 120, true)).toEqual({ inr: 120, src: "local" });
+    // unknown items: sane spoonacular wins, silly ones (₹0 paprika, ₹1 cheese) don't
+    expect(pickCost(70, 50)).toEqual({ inr: 70, src: "spoon" });
+    expect(pickCost(0, 50)).toEqual({ inr: 50, src: "local" });
+    expect(pickCost(1, 130)).toEqual({ inr: 130, src: "local" });
+    expect(pickCost(900, 50)).toEqual({ inr: 50, src: "local" });
+    expect(pickCost(null, 50)).toEqual({ inr: 50, src: "local" });
   });
 });
 

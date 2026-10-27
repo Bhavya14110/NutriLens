@@ -89,7 +89,7 @@ export function ShopScreen() {
               <p className="mt-0.5 text-xs opacity-80">
                 {data.priced === "none"
                   ? `${todo.length} item${todo.length === 1 ? "" : "s"} to buy · tap estimate for a rough cost`
-                  : `Estimate for ${todo.length} item${todo.length === 1 ? "" : "s"}${src === "local" ? " · typical Indian prices" : src === "spoon" ? " · via Spoonacular, converted to ₹" : ""}. Actual prices vary.`}
+                  : `Estimate for ${todo.length} item${todo.length === 1 ? "" : "s"}${src === "local" ? " · typical Indian prices" : src === "mixed" ? " · Indian prices, Spoonacular for the rest" : src === "spoon" ? " · via Spoonacular, converted to ₹" : ""}. Actual prices vary.`}
               </p>
             </div>
             <Button variant="secondary" onClick={() => cost.mutate()} disabled={cost.isPending || !todo.length}>

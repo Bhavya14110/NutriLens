@@ -41,7 +41,7 @@ export type ShopItemView = {
 
 export type ShopRes = { items: ShopItemView[]; total: number; priced: "estimate" | "none" };
 
-export type CostRes = { total: number; priced: "spoon" | "local" | "none" };
+export type CostRes = { total: number; priced: "spoon" | "local" | "mixed" | "none" };
 
 export type Mate = { user_id: string; name: string; role: Role; allergens: string[]; diet: Diet; alcohol_ok: boolean };
 
