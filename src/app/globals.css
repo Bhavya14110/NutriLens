@@ -175,6 +175,17 @@
   }
 }
 
+/* bars grow in from the left; pure css so the final width never depends on js running */
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+.animate-grow {
+  transform-origin: left center;
+  animation: grow-x 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 /* the moving line inside the scan frame */
 @keyframes scanline {
   0% {

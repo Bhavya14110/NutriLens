@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type { Bar, Light } from "@/lib/health";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +35,7 @@ export function NutrientBars({ bars }: { bars: Bar[] }) {
               aria-valuenow={b.value ?? 0}
               aria-valuetext={b.value === null ? "not available" : `${b.value} grams, ${word}`}
             >
-              <motion.div className={cn("h-full rounded-full", t?.bar ?? "bg-muted-foreground/30")} initial={{ width: 0 }} animate={{ width: `${Math.max(pct, b.value ? 2 : 0)}%` }} transition={{ duration: 0.7, delay: 0.1 + i * 0.07, ease: "easeOut" }} />
+              <div className={cn("animate-grow h-full rounded-full", t?.bar ?? "bg-muted-foreground/30")} style={{ width: `${Math.max(pct, b.value ? 2 : 0)}%`, animationDelay: `${100 + i * 70}ms` }} />
             </div>
           </li>
         );
@@ -62,7 +61,7 @@ export function SugarCompare({ productSugar, fruit, fruitSugar }: { productSugar
               <span className="font-semibold tabular-nums">{r.v === null ? "—" : `${r.v} g sugar`} / 100 g</span>
             </div>
             <div className="h-3 overflow-hidden rounded-full bg-muted">
-              <motion.div className={cn("h-full rounded-full", r.cls)} initial={{ width: 0 }} animate={{ width: `${((r.v ?? 0) / max) * 100}%` }} transition={{ duration: 0.7, delay: i * 0.1 }} />
+              <div className={cn("animate-grow h-full rounded-full", r.cls)} style={{ width: `${((r.v ?? 0) / max) * 100}%`, animationDelay: `${i * 100}ms` }} />
             </div>
           </li>
         ))}

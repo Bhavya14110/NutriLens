@@ -30,7 +30,7 @@ export function FoodImage({
   return (
     <div className={cn("relative overflow-hidden bg-muted", className)}>
       {src && !broken ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={contain ? "object-contain p-2" : "object-cover"} onError={() => setBroken(true)} />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} unoptimized className={contain ? "object-contain p-2" : "object-cover"} onError={() => setBroken(true)} />
       ) : (
         <div className="grid size-full place-items-center text-muted-foreground" role="img" aria-label={alt}>
           <Icon className="size-1/3 min-h-5 min-w-5" aria-hidden="true" />

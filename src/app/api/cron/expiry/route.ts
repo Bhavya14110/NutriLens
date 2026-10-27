@@ -1,6 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
 import { fail, ok, route } from "@/lib/api";
-import { env } from "@/lib/env";
 import { addDays, todayIst } from "@/lib/expiry";
 import { isSub, pushReady, sendPush } from "@/lib/push";
 import { supabaseAdmin } from "@/lib/supabase/server";
@@ -8,7 +7,8 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 export const maxDuration = 60;
 
 function authed(req: Request) {
-  const secret = env().CRON_SECRET;
+  // read straight from process.env so a bad caller gets 401 even if other config is missing
+  const secret = process.env.CRON_SECRET;
   if (!secret) return false;
   // vercel cron sends "Authorization: Bearer <CRON_SECRET>"
   const got = Buffer.from(req.headers.get("authorization") ?? "");

@@ -156,7 +156,7 @@ function Explore() {
                   onClick={() => setQs(`category=${encodeURIComponent(c.name)}`)}
                   className={cn("flex shrink-0 items-center gap-2 rounded-full border py-1 pr-3.5 pl-1 text-sm font-medium transition-colors", on ? "border-primary bg-primary text-primary-foreground" : "hover:bg-muted")}
                 >
-                  {c.image && <Image src={c.image} alt="" width={32} height={32} className="size-8 rounded-full bg-white object-contain" />}
+                  {c.image && <Image src={c.image} alt="" width={32} height={32} unoptimized className="size-8 rounded-full bg-white object-contain" />}
                   {c.name}
                 </button>
               );

@@ -54,7 +54,7 @@ export function CookMode({ src, recipe, ings, onClose }: { src: "spoon" | "meald
       </header>
       {phase === "steps" && (
         <div className="h-1 bg-muted">
-          <motion.div className="h-full bg-primary" animate={{ width: `${((step + 1) / total) * 100}%` }} />
+          <div className="h-full bg-primary transition-[width] duration-300" style={{ width: `${((step + 1) / total) * 100}%` }} />
         </div>
       )}
 

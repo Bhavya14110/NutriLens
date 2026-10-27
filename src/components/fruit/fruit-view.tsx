@@ -89,7 +89,7 @@ export function FruitView({ name }: { name: string }) {
                   </span>
                 </div>
                 <div className="h-2.5 overflow-hidden rounded-full bg-muted" role="meter" aria-label={r.label} aria-valuemin={0} aria-valuemax={r.max} aria-valuenow={v}>
-                  <motion.div className="h-full rounded-full bg-primary" initial={{ width: 0 }} animate={{ width: `${Math.min(100, (v / r.max) * 100)}%` }} transition={{ duration: 0.6, delay: i * 0.07 }} />
+                  <div className="animate-grow h-full rounded-full bg-primary" style={{ width: `${Math.min(100, (v / r.max) * 100)}%`, animationDelay: `${i * 70}ms` }} />
                 </div>
               </li>
             );
