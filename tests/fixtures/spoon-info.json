@@ -1,0 +1,9 @@
+{"id": 715497, "title": "Berry Banana Breakfast Smoothie", "image": "https://img.spoonacular.com/recipes/715497-556x370.jpg", "servings": 1, "readyInMinutes": 5, "sourceUrl": "https://example.com/smoothie",
+ "vegetarian": true, "vegan": false, "cuisines": [], "dishTypes": ["breakfast", "beverage"], "diets": ["lacto ovo vegetarian"],
+ "instructions": "<ol><li>Blend everything.</li><li>Serve cold.</li></ol>",
+ "extendedIngredients": [
+   {"id": 9040, "aisle": "Produce", "name": "banana", "original": "1 banana", "amount": 1, "unit": ""},
+   {"id": 1116, "aisle": "Milk, Eggs, Other Dairy", "name": "yogurt", "original": "1 cup yogurt", "amount": 1, "unit": "cup"},
+   {"id": 9050, "aisle": "Produce", "name": "blueberries", "original": "1/2 cup blueberries", "amount": 0.5, "unit": "cup"}
+ ],
+ "analyzedInstructions": [{"name": "", "steps": [{"number": 1, "step": "Add banana, yogurt and berries to a blender."}, {"number": 2, "step": "Blend until smooth and serve cold."}]}]}

@@ -1,0 +1,5 @@
+[
+  {"id": 1077, "original": "1 litre milk", "name": "milk", "amount": 1, "unit": "litre", "estimatedCost": {"value": 112.5, "unit": "US Cents"}},
+  {"id": 18064, "original": "1 bread", "name": "bread", "amount": 1, "unit": "", "estimatedCost": {"value": 250.0, "unit": "US Cents"}},
+  {"id": 11282, "original": "1 kg onion", "name": "onion", "amount": 1, "unit": "kg", "estimatedCost": {"value": 360.9, "unit": "US Cents"}}
+]
