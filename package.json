@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "seed": "tsx scripts/seed.ts",
     "gen:vapid": "tsx scripts/gen-vapid.ts",
-    "gen:icons": "tsx scripts/gen-icons.ts"
+    "gen:icons": "tsx scripts/gen-icons.ts",
+    "dev:login": "tsx scripts/dev-login.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

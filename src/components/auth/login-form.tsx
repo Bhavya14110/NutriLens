@@ -31,7 +31,7 @@ export function LoginForm() {
     setBusy("email");
     const { error } = await supabaseBrowser().auth.signInWithOtp({ email: parsed.data, options: { emailRedirectTo: callback() } });
     setBusy(null);
-    if (error) return setErr(error.status === 429 ? "Too many tries. Wait a minute and send again." : "We couldn't send the link. Check the address and try again.");
+    if (error) return setErr(linkError(error.code, error.message, error.status));
     setSent(true);
   }
 
@@ -97,6 +97,16 @@ export function LoginForm() {
       )}
     </AnimatePresence>
   );
+}
+
+// supabase has two different limits that both come back as 429 - say which one it is
+function linkError(code: string | undefined, msg: string, status: number | undefined) {
+  if (code === "over_email_send_rate_limit") return "We've hit the email limit for this hour (Supabase's built-in mailer only sends a few per hour). Try again later, or use Google.";
+  const secs = msg.match(/after (\d+) seconds?/)?.[1];
+  if (secs) return `Please wait ${secs} seconds before asking for another link.`;
+  if (code === "over_request_rate_limit" || status === 429) return "Too many tries from this device. Wait a few minutes and try again.";
+  if (code === "email_address_invalid") return "That email address isn't accepted. Check it and try again.";
+  return "We couldn't send the link. Check the address and try again.";
 }
 
 function GoogleIcon() {

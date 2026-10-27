@@ -108,6 +108,8 @@ Needs **Node 20.9+** (developed on Node 24) and a free **Supabase** project.
 
    To look around as the demo user without an inbox, sign in with your own email, then open the invite link `http://localhost:3000/join/de30f1a7` to join the demo household.
 
+   **Email limit:** Supabase's built-in mailer sends only **2 sign-in emails per hour per project**. While developing, skip email entirely with `npm run dev:login -- you@example.com` and open the link it prints. For real users, set up custom SMTP (e.g. Resend's free tier) in Authentication → Emails → SMTP Settings, then raise the limit in Authentication → Rate Limits.
+
 7. **Start**
 
    ```bash
@@ -127,6 +129,7 @@ Needs **Node 20.9+** (developed on Node 24) and a free **Supabase** project.
 | `npm run build` / `npm start` | Production build / serve |
 | `npm run test:e2e` | Playwright smoke test (needs a seeded Supabase + a running build; run `npx playwright install chromium` once) |
 | `npm run seed` | Rebuild the demo + e2e households |
+| `npm run dev:login -- you@example.com` | Print a one-time sign-in link without sending an email (local only, uses the service role key) |
 | `npm run gen:vapid` | Print a VAPID key pair for push |
 | `npm run gen:icons` | Regenerate the PWA icons from the SVG |
 
